@@ -6,10 +6,9 @@ base=$scripts/..
 models=$base/models
 configs=$base/configs
 
-mkdir -p $models
+mkdir -p "$models"
 
-num_threads=10
-#device=0
+num_threads=16
 
 # measure time
 
@@ -17,13 +16,14 @@ SECONDS=0
 
 logs=$base/logs
 
-model_name=deen_transformer_regular
+# model_name=deen_transformer_post_norm
+model_name=deen_transformer_pre_norm
 
-mkdir -p $logs
+mkdir -p "$logs"
 
-mkdir -p $logs/$model_name
+mkdir -p "$logs"/$model_name
 
-OMP_NUM_THREADS=$num_threads python -m joeynmt train $configs/$model_name.yaml > $logs/$model_name/out 2> $logs/$model_name/err
+OMP_NUM_THREADS=$num_threads python -m joeynmt train "$configs"/$model_name.yaml > "$logs"/$model_name/out 2> "$logs"/$model_name/err
 
 echo "time taken:"
 echo "$SECONDS seconds"
